@@ -27,7 +27,7 @@ class NodeRpcWrapper(object):
                 datetime.datetime.now())}
             try:
                 for pillar in d['result']['list']:
-                    pillars['pillars'][pillar['ownerAddress']] = {'name': pillar['name'], 'ownerAddress': pillar['ownerAddress'], 'currentStats': pillar['currentStats'], 'weight': pillar['weight'],
+                    pillars['pillars'][pillar['ownerAddress']] = {'name': pillar['name'], 'ownerAddress': pillar['ownerAddress'], 'currentStats': pillar['currentStats'], 'weight': int(pillar['weight']),
                                                                   'giveMomentumRewardPercentage': pillar['giveMomentumRewardPercentage'], 'giveDelegateRewardPercentage': pillar['giveDelegateRewardPercentage'], 'rank': pillar['rank']}
             except KeyError:
                 return {'error': 'KeyError: get_all_pillars'}
@@ -41,7 +41,7 @@ class NodeRpcWrapper(object):
             d = json.loads(r.text)
             if len(d['result']['list']) > 0:
                 try:
-                    return {'epoch': d['result']['list'][0]['epoch'], 'reward': d['result']['list'][0]['znnAmount'], 'timestamp': str(datetime.datetime.now())}
+                    return {'epoch': d['result']['list'][0]['epoch'], 'reward': int(d['result']['list'][0]['znnAmount']), 'timestamp': str(datetime.datetime.now())}
                 except KeyError:
                     return {'error': 'KeyError: get_reward_epoch'}
             else:
